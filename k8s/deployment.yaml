@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: paypulse-api}
+spec:
+  replicas: 2
+  selector: {matchLabels: {app: paypulse-api}}
+  template:
+    metadata: {labels: {app: paypulse-api}}
+    spec:
+      containers:
+      - name: api
+        image: paypulse-api:latest
+        ports: [{containerPort: 8000}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: paypulse-api}
+spec:
+  selector: {app: paypulse-api}
+  ports: [{port: 8000, targetPort: 8000}]
